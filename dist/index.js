@@ -51,6 +51,9 @@ function handlePullRequest(client, context, config) {
         const { pull_request: event } = context.payload;
         const { title, draft, user, number } = event;
         const { skipKeywords, useReviewGroups, useAssigneeGroups, reviewGroups, assigneeGroups, addReviewers, addAssignees, filterLabels, runOnDraft, } = config;
+
+        core.debug(`config: ${JSON.stringify(config)}`)
+
         if (skipKeywords && utils.includesSkipKeywords(title, skipKeywords)) {
             core.info('Skips the process to add reviewers/assignees since PR title includes skip-keywords');
             return;
@@ -66,7 +69,9 @@ function handlePullRequest(client, context, config) {
             throw new Error("Error in configuration file to do with using review groups. Expected 'assigneeGroups' variable to be set because the variable 'useAssigneeGroups' = true.");
         }
         const owner = user.login;
+        core.debug(`owner: ${owner}`)
         const pr = new pull_request_1.PullRequest(client, context);
+        core.debug(`pr: ${JSON.stringify(pr)}`)
         if (filterLabels !== undefined) {
             if (filterLabels.include !== undefined && filterLabels.include.length > 0) {
                 const hasLabels = pr.hasAnyLabel(filterLabels.include);
@@ -30145,7 +30150,7 @@ module.exports = JSON.parse('[[[0,44],"disallowed_STD3_valid"],[[45,46],"valid"]
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/ 	
+/******/
 /******/ 	// The require function
 /******/ 	function __nccwpck_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -30159,7 +30164,7 @@ module.exports = JSON.parse('[[[0,44],"disallowed_STD3_valid"],[[45,46],"valid"]
 /******/ 			loaded: false,
 /******/ 			exports: {}
 /******/ 		};
-/******/ 	
+/******/
 /******/ 		// Execute the module function
 /******/ 		var threw = true;
 /******/ 		try {
@@ -30168,14 +30173,14 @@ module.exports = JSON.parse('[[[0,44],"disallowed_STD3_valid"],[[45,46],"valid"]
 /******/ 		} finally {
 /******/ 			if(threw) delete __webpack_module_cache__[moduleId];
 /******/ 		}
-/******/ 	
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/ 	
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/ 	
+/******/
 /************************************************************************/
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
@@ -30185,11 +30190,11 @@ module.exports = JSON.parse('[[[0,44],"disallowed_STD3_valid"],[[45,46],"valid"]
 /******/ 			return module;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/compat */
-/******/ 	
+/******/
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
-/******/ 	
+/******/
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
