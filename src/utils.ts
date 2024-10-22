@@ -10,11 +10,18 @@ export function chooseReviewers(owner: string, config: Config): string[] {
     useReviewGroups && Object.keys(reviewGroups).length > 0
 
   if (useGroups) {
-    chosenReviewers = chooseUsersFromGroups(
+    chosenReviewers = chooseUsersFromOwnerGroup(
       owner,
       reviewGroups,
       numberOfReviewers
     )
+    if (chosenReviewers.length === 0) {
+      chosenReviewers = chooseUsersFromGroups(
+        owner,
+        reviewGroups,
+        numberOfReviewers
+      )
+    }
   } else {
     chosenReviewers = chooseUsers(reviewers, numberOfReviewers, owner)
   }
@@ -100,6 +107,21 @@ export function chooseUsersFromGroups(
   let users: string[] = []
   for (const group in groups) {
     users = users.concat(chooseUsers(groups[group], desiredNumber, owner))
+  }
+  return users
+}
+
+export function chooseUsersFromOwnerGroup(
+  owner: string,
+  groups: { [key: string]: string[] } | undefined,
+  desiredNumber: number
+): string[] {
+  let users: string[] = []
+  for (const group in groups) {
+    if (groups[group].includes(owner)) {
+      users = users.concat(chooseUsers(groups[group], desiredNumber, owner))
+      break
+    }
   }
   return users
 }
