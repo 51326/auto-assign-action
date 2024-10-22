@@ -113,6 +113,7 @@ export function chooseUsersFromOwnerGroup(
   for (const group in groups) {
     if (groups[group].includes(owner)) {
       users = users.concat(chooseUsers(groups[group], desiredNumber, owner))
+      break
     }
   }
   return users
